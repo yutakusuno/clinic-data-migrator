@@ -147,7 +147,11 @@ graph TD
     - Long transactions can cause database locks, impacting performance.
     - Complex logic may reduce code readability.
 
-- Future Improvement: Handling System Failures During Transactions
+## Future Improvement
+
+- Creating unit/integration tests using auto-testing frameworks like RSpec
+- Checking file size when uploading
+- Handling System Failures During Transactions
   - Log error details for troubleshooting.
   - Implement mechanisms for resuming or retrying migrations without data loss.
   - Provide user feedback on upload status and errors for data correction.
