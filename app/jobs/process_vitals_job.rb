@@ -15,24 +15,39 @@ class ProcessVitalsJob < ApplicationJob
     CSV.foreach(file.path, headers: true).with_index do |row, index|
       patient = HealthIdentifier.find_by(identifier_number: row["health identifier"])&.patient
 
-      if patient
-        vital = Vital.new(
-          patient: patient,
-          vital_type: row["vital_type"],
-          measurement: row["measurement"].to_f,
-          units: row["units"]
-        )
-
-        if vital.save
-          imported_count += 1
-        else
-          error_message = "Row #{index + 1}: Vital #{row['vital_type']} creation failed: #{vital.errors.full_messages.join(', ')}"
-          migration_errors << error_message
-        end
-      else
+      unless patient
         error_message = "Row #{index + 1}: Patient with health identifier #{row['health identifier']} not found."
         migration_errors << error_message
+        next
       end
+
+      existing_vital = Vital.find_by(
+        patient: patient,
+        vital_type: row["vital_type"],
+        measurement: row["measurement"].to_f,
+        units: row["units"]
+      )
+
+      if existing_vital
+        error_message = "Row #{index + 1}: Vital #{row['vital_type']} for patient #{patient.id} already exists."
+        migration_errors << error_message
+        next
+      end
+
+      vital = Vital.new(
+        patient: patient,
+        vital_type: row["vital_type"],
+        measurement: row["measurement"].to_f,
+        units: row["units"]
+      )
+
+      unless vital.save
+        error_message = "Row #{index + 1}: Vital #{row['vital_type']} creation failed: #{vital.errors.full_messages.join(', ')}"
+        migration_errors << error_message
+        next
+      end
+
+      imported_count += 1
     end
 
     # File Migration Log Update

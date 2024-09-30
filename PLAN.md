@@ -56,8 +56,6 @@ erDiagram
   - This ensures efficient data retrieval and uniqueness.
 - Designed the patients table to have multiple addresses and health_identifiers
   - This accommodates modern lifestyle variations like living in two provinces or frequent relocations
-- The vitals table allows multiple records of the same vital_type
-  - This enables tracking health changes over time, and the accumulated data can be utilized for analysis in BI tools
 - All columns in the addresses table are set to Nullable true
 
   - In services like online consultations, I considered phone numbers and email addresses often take precedence over physical addresses
