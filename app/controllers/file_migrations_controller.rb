@@ -1,4 +1,12 @@
 class FileMigrationsController < ApplicationController
+  def index
+    @file_migrations = FileMigration.all
+  end
+
+  def show
+    @file_migration = FileMigration.find(params[:id])
+  end
+
   def new
   end
 

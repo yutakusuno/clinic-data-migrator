@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :file_migrations, only: [:new, :create] do
+  resources :file_migrations, only: [:index, :show, :new, :create] do
     collection do
       post :create_patients
       post :create_vitals

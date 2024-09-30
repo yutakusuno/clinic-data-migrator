@@ -1,0 +1,18 @@
+<h1>Migration Details for <%= @file_migration.file_name %></h1>
+<p>Start Time: <%= @file_migration.start_time %></p>
+<p>End Time: <%= @file_migration.end_time %></p>
+<p>Imported Count: <%= @file_migration.imported_count %></p>
+<p>Duration: <%= @file_migration.duration %></p>
+
+<h2>Errors</h2>
+<% if @file_migration.migration_errors.present? %>
+  <ul>
+    <% @file_migration.migration_errors.split("\n").each do |error| %>
+      <li><%= error %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No errors found.</p>
+<% end %>
+
+<%= link_to 'Back to Migrations', file_migrations_path %>

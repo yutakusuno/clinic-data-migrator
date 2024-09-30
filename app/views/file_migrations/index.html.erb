@@ -1,0 +1,24 @@
+<h1>File Migrations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>File Name</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Imported Patient Count</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @file_migrations.each do |file_migration| %>
+      <tr>
+        <td><%= file_migration.file_name %></td>
+        <td><%= file_migration.start_time %></td>
+        <td><%= file_migration.end_time %></td>
+        <td><%= file_migration.imported_count %></td>
+        <td><%= link_to 'View Details', file_migration_path(file_migration) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
